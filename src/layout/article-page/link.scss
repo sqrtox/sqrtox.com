@@ -1,0 +1,22 @@
+.content {
+  a {
+    word-break: break-all;
+    color: var(--mui-palette-primary-main);
+    text-decoration-color: rgba(var(--mui-palette-primary-mainChannel) / 0.4);
+
+    &:hover {
+      text-decoration-color: inherit;
+    }
+  }
+
+  a[id^="user-content-fnref-"] {
+    margin-right: calc(1 * var(--mui-spacing));
+  }
+
+  :global(.openInNewIcon) {
+    fill: currentColor;
+    width: 1em;
+    height: auto;
+    vertical-align: middle;
+  }
+}

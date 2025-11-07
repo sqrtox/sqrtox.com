@@ -1,170 +1,115 @@
 import { readFile } from "node:fs/promises";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
+import type { Toc } from "@stefanprobst/rehype-extract-toc";
 import fm from "front-matter";
-import tagLabels from "#src/article/tag.json";
-import { CONTENTS_DIR } from "#src/dir";
-import {
-  type SafeArticleBase,
-  type UnsafeArticleBase,
-  validateArticleBase,
-} from "./base";
-import {
-  type ArticleHistory,
-  type ArticleLog,
-  readLogs,
-} from "./history/history";
-import { type CompileResult, compile } from "./markdown";
-import { type SafeSlug, type UnsafeSlug, validateSlug } from "./slug";
-import type { ArticleTag } from "./tag";
+import isAbsoluteUrl from "is-absolute-url";
+import { $object, $opt, $string } from "lizod";
+import tag from "#src/article/tag.json";
+import { type CompiledData, compile, type Html } from "./markdown";
+import { type AbsolutePath, ARTICLE_DIR, type RelativePath } from "./path";
+import { getAllSlugs, type Slug, type SlugPath } from "./slug";
 
 const WHITESPACES = /\s+/;
 
-export interface ArticleMetadata {
-  title: string;
-  tags: ArticleTag[];
-}
+const ArticleAttributes = $object(
+  {
+    title: $string,
+    tags: $opt($string),
+  },
+  false,
+);
 
-export interface ArticleTimestamp {
-  createdAt?: number;
-  updatedAt?: number;
+export type ArticleBase = RelativePath;
+
+export interface ArticleTag {
+  id: string;
+  label: string;
 }
 
 export class Article {
-  readonly slug: SafeSlug;
-  readonly base: SafeArticleBase;
-  readonly #dir: string;
+  readonly slug: SlugPath;
+  readonly title: string;
+  readonly markdown: string;
+  readonly tags: ArticleTag[];
+  readonly #dir: AbsolutePath;
 
-  constructor(slug: UnsafeSlug, articleBase: UnsafeArticleBase = "") {
-    validateSlug(slug);
-    validateArticleBase(articleBase);
-
+  private constructor(
+    slug: SlugPath,
+    dir: AbsolutePath,
+    title: string,
+    markdown: string,
+    tags: ArticleTag[],
+  ) {
     this.slug = slug;
-    this.base = articleBase;
-    this.#dir = join(CONTENTS_DIR, articleBase, slug);
+    this.title = title;
+    this.markdown = markdown;
+    this.#dir = dir;
+    this.tags = tags;
   }
 
-  #contents?: string;
+  static async create(slug: Slug, base?: ArticleBase): Promise<Article> {
+    const slugPath = slug.join("/");
+    const dir = join(ARTICLE_DIR, base ?? "", slugPath);
+    const path = join(dir, "index.md");
+    const content = await readFile(path, "utf8");
+    const { attributes, body } = fm(content);
+    const ctx = { errors: [] };
 
-  async #getContents(): Promise<string> {
-    if (this.#contents === undefined) {
-      this.#contents = await readFile(join(this.#dir, "index.md"), "utf8");
+    if (!ArticleAttributes(attributes, ctx)) {
+      throw ctx;
     }
 
-    return this.#contents;
+    const collator = new Intl.Collator();
+    const tags: ArticleTag[] | undefined = attributes.tags
+      ?.split(WHITESPACES)
+      .map((id) => ({
+        id,
+        label: tag[id as keyof typeof tag] ?? id,
+      }))
+      .sort((a, b) => collator.compare(a.id, b.id));
+
+    return new Article(slugPath, dir, attributes.title, body, tags ?? []);
   }
 
-  #markdown?: string;
-  #attributes?: unknown;
+  static async allArticles(base: ArticleBase): Promise<Article[]> {
+    const articles: Article[] = [];
 
-  async #matter(): Promise<[markdown: string, attributes: unknown]> {
-    if (this.#markdown === undefined || this.#attributes === undefined) {
-      const contents = await this.#getContents();
-      const result = fm(contents);
-
-      this.#markdown = result.body;
-      this.#attributes = result.attributes;
+    for (const slug of await getAllSlugs(base)) {
+      articles.push(await Article.create(slug, base));
     }
 
-    return [this.#markdown, this.#attributes];
+    return articles;
   }
 
-  #metadata?: ArticleMetadata;
+  #compiled?: CompiledData;
 
-  async getMetadata(): Promise<ArticleMetadata> {
-    if (this.#metadata === undefined) {
-      const matter = await this.#matter();
-      const attrs = matter[1];
-
-      // TODO
-      if (typeof attrs !== "object" || attrs === null)
-        throw new TypeError("error");
-
-      if (!("title" in attrs) || typeof attrs.title !== "string")
-        throw new TypeError("error");
-
-      // TODO: validation
-      this.#metadata = {
-        title: attrs.title,
-        tags:
-          "tags" in attrs && typeof attrs.tags === "string"
-            ? attrs.tags
-                .split(WHITESPACES)
-                .map((id) => ({
-                  id,
-                  label: tagLabels[id as keyof typeof tagLabels],
-                }))
-                .filter((tag) => tag.label !== undefined)
-            : [],
-      };
-    }
-
-    return this.#metadata;
-  }
-
-  #compiled?: CompileResult;
-
-  async #getCompiled(): Promise<CompileResult> {
+  async #compile(): Promise<CompiledData> {
     if (!this.#compiled) {
-      const matter = await this.#matter();
-      const markdown = matter[0];
+      this.#compiled = await compile(this.markdown, {
+        resolveAssetsPath: async (src) => {
+          if (isAbsoluteUrl(src) || src.startsWith("//")) {
+            return src;
+          }
 
-      this.#compiled = await compile(markdown);
+          const path = resolve(this.#dir, src);
+
+          return path;
+        },
+      });
     }
 
     return this.#compiled;
   }
 
-  async html(): Promise<string> {
-    return (await this.#getCompiled()).html;
+  async toc(): Promise<Toc | undefined> {
+    const { toc } = await this.#compile();
+
+    return toc;
   }
 
-  async text(): Promise<string> {
-    return (await this.#getCompiled()).text;
-  }
+  async html(): Promise<Html> {
+    const { html } = await this.#compile();
 
-  #history?: ArticleHistory;
-
-  async history(): Promise<ArticleHistory> {
-    if (!this.#history) {
-      this.#history = await readLogs(this.slug, this.base);
-      this.#history.sort((a, b) => b.timestamp - a.timestamp);
-    }
-
-    return this.#history;
-  }
-
-  #timestamp?: ArticleTimestamp;
-
-  async timestamp(): Promise<ArticleTimestamp> {
-    if (!this.#timestamp) {
-      const history = await this.history();
-
-      let oldest: ArticleLog | undefined;
-      let latest: ArticleLog | undefined;
-
-      for (const log of history) {
-        oldest ??= log;
-        latest ??= log;
-
-        if (oldest.timestamp > log.timestamp) {
-          oldest = log;
-        }
-
-        if (latest.timestamp < log.timestamp) {
-          latest = log;
-        }
-      }
-
-      if (oldest?.commit === latest?.commit) {
-        latest = undefined;
-      }
-
-      this.#timestamp = {
-        createdAt: oldest?.timestamp,
-        updatedAt: latest?.timestamp,
-      };
-    }
-
-    return this.#timestamp;
+    return html;
   }
 }

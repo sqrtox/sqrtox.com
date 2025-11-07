@@ -1,11 +1,21 @@
 .switch[class] {
-  width: 58px;
-  height: 29px;
+  --switch-width: 58px;
+  --switch-height: calc(var(--switch-width) / 2);
+
+  width: var(--switch-width);
+  height: var(--switch-height);
   padding: 0;
 
   & :global(.MuiSwitch-switchBase) {
     padding: 0;
     transform: translate(3px, 2px);
+
+    input {
+      width: 400%;
+      height: 200%;
+      left: -150%;
+      top: unset;
+    }
 
     &:hover {
       background-color: transparent;
@@ -25,7 +35,7 @@
   }
 
   & :global(.MuiSwitch-track) {
-    border-radius: 12px;
+    border-radius: var(--switch-width);
     background-color: var(--mui-palette-sky-default);
   }
 }

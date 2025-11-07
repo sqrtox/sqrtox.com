@@ -2,26 +2,23 @@ import type { NextConfig } from "next";
 
 const dev = process.env.NODE_ENV === "development";
 
-const nextConfig: NextConfig = {
-  output: dev ? undefined : "export",
-  turbopack: {
-    resolveAlias: {
-      budoux: "budoux/dist/index",
-    },
-  },
+export const nextConfig: NextConfig = {
+  reactCompiler: !dev,
+  reactStrictMode: true,
+  output: "export",
   experimental: {
-    reactCompiler: !dev,
     esmExternals: true,
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
     webpackBuildWorker: true,
   },
-  webpack: (config) => {
-    config.resolve ??= {};
-    config.resolve.alias ??= {};
-    config.resolve.alias.budoux = "budoux/dist/index";
-
-    return config;
+  turbopack: {
+    rules: {
+      "*.svg": {
+        loaders: ["@svgr/webpack"],
+        as: "*.js",
+      },
+    },
   },
 };
 

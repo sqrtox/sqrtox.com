@@ -1,0 +1,46 @@
+.content {
+  @function step($level, $min, $max, $base) {
+    $exp: pow($base, $level - 1);
+
+    @return calc(#{$min} + #{$exp} * (#{$max} - #{$min}));
+  }
+
+  @function repeat($char, $n) {
+    $c: "";
+
+    @for $i from 1 through $n {
+      $c: $c + $char;
+    }
+
+    @return $c;
+  }
+
+  @for $i from 1 through 6 {
+    h#{$i} {
+      $m: step($i, 2rem, 3rem, 0.6);
+      margin: 0;
+      margin-top: $m;
+      margin-bottom: calc($m * 0.8);
+      font-size: step($i, 1.2rem, 1.5rem, 0.4);
+      border-bottom: thin solid var(--mui-palette-divider);
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  :global(a:has(> .headingLink)) {
+    --color-channel: var(--mui-palette-text-secondaryChannel);
+
+    color: rgba(var(--color-channel) / 0.7);
+    text-decoration-color: rgba(var(--color-channel) / 0.4);
+
+    &:hover {
+      text-decoration-color: rgba(var(--color-channel) / 1);
+    }
+
+    :global(.headingLink) {
+      padding-right: calc(1 * var(--mui-spacing));
+      font-size: 1em;
+    }
+  }
+}

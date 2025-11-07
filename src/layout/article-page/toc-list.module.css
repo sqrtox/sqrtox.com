@@ -1,0 +1,22 @@
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  display: inline-block;
+  width: 100%;
+  padding: calc(0.5 * var(--mui-spacing)) calc(1 * var(--mui-spacing));
+  padding-left: calc(calc(1 + calc(var(--depth) * 2)) * var(--mui-spacing));
+  text-decoration: none;
+  color: var(--mui-palette-text-secondary);
+}
+
+.link:hover {
+  color: var(--mui-palette-text-primary);
+  background-color: var(--mui-palette-action-hover);
+  text-decoration: underline;
+}

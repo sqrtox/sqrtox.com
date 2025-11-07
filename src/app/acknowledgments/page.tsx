@@ -1,8 +1,8 @@
-import { rootArticleManager } from "#src/article/manager";
-import ArticlePage from "#src/article/page";
+import { Article } from "#src/article/article";
 
-export default function Page() {
-  const article = rootArticleManager.article("acknowledgments");
+export default async function Page() {
+  const article = await Article.create(["acknowledgments"]);
+  const html = await article.html();
 
-  return <ArticlePage article={article} />;
+  return <></>;
 }

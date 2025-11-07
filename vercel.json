@@ -1,8 +1,0 @@
-{
-  "buildCommand": "bun run build",
-  "git": {
-    "deploymentEnabled": {
-      "main": false
-    }
-  }
-}
