@@ -8,7 +8,7 @@ export default function CommonLayout({ children }: PropsWithChildren) {
   return (
     <Stack minHeight="100svh">
       <Header />
-      <Box component="main" flex={1}>
+      <Box component="main" flex={1} display="flex">
         {children}
       </Box>
       <Footer />

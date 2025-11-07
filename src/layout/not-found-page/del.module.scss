@@ -1,0 +1,27 @@
+@keyframes del {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(100svh);
+    opacity: 0;
+  }
+}
+
+html:has(#delMessage) {
+  height: 100svh;
+  overflow: hidden;
+
+  *:not(#delMessage):not(#delMessage *):not(:has(#delMessage)) {
+    animation: del 2s ease-in forwards;
+    pointer-events: none;
+  }
+}
+
+#delMessage {
+  position: absolute;
+  top: auto;
+  left: auto;
+}

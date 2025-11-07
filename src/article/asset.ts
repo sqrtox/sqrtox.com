@@ -1,9 +1,9 @@
 import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
 import { cp, mkdir, readFile, rm } from "node:fs/promises";
-import { join, parse } from "node:path";
+import { join, parse, relative, sep } from "node:path";
 import { fileTypeFromBuffer } from "file-type";
-import { ASSETS_DIR } from "#src/article/path";
+import { ASSETS_DIR, NOTE_DIR } from "#src/article/path";
 import { Rc } from "#src/util/rc";
 
 export class Asset {
@@ -62,7 +62,17 @@ export class AssetManager {
   readonly #assets: Map<string, Asset> = new Map();
 
   static #isValidSrcPath(path: string): boolean {
-    return parse(path).base !== "index.md";
+    if (parse(path).base === "index.md") {
+      return false;
+    }
+
+    const rel = relative(NOTE_DIR, path).replaceAll(sep, "/");
+
+    if (!rel.startsWith("../")) {
+      return false;
+    }
+
+    return true;
   }
 
   async create(path: string): Promise<void> {

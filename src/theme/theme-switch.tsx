@@ -6,7 +6,6 @@ import Switch from "@mui/material/Switch";
 import { useColorScheme, useTheme } from "@mui/material/styles";
 import clsx from "clsx";
 import type { ReactNode } from "react";
-import ThemeSwitchThumb from "#src/theme/theme-switch-thumb";
 import styles from "./theme-switch.module.scss";
 
 export default function ThemeSwitch(): ReactNode {
@@ -29,14 +28,14 @@ export default function ThemeSwitch(): ReactNode {
       className={clsx(isNotInitialized && styles.switchHidden, styles.switch)}
       disableRipple
       icon={
-        <ThemeSwitchThumb bgcolor={theme.vars.palette.sky.default}>
+        <div className={styles.switchThumb}>
           <LightModeIcon fill={theme.vars.palette.sky.light} />
-        </ThemeSwitchThumb>
+        </div>
       }
       checkedIcon={
-        <ThemeSwitchThumb bgcolor={theme.vars.palette.sky.default}>
+        <div className={styles.switchThumb}>
           <DarkModeIcon fill={theme.vars.palette.sky.light} />
-        </ThemeSwitchThumb>
+        </div>
       }
     />
   );

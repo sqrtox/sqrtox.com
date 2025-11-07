@@ -1,0 +1,37 @@
+@keyframes notesRotate {
+  from {
+    scale: 0.6;
+    transform: rotateY(-45deg);
+  }
+
+  to {
+    scale: 0.7;
+    transform: rotateY(45deg);
+  }
+}
+
+.bird {
+  user-select: none;
+  cursor: default;
+
+  .notes {
+    scale: 0;
+    opacity: 0;
+    transition: opacity 0.25s, scale 0.25s;
+    animation: notesRotate 1s linear 0.25s infinite alternate none paused;
+  }
+
+  &:hover .notes {
+    scale: 0.6;
+    opacity: 1;
+    animation-play-state: running;
+  }
+
+  .emoji {
+    transform: rotateY(180deg);
+  }
+}
+
+.birdGround {
+  background: linear-gradient(to right, rgba(var(--mui-palette-dividerChannel) / 0.1), transparent)
+}

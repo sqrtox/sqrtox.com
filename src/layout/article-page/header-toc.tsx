@@ -7,6 +7,7 @@ import type { Toc } from "@stefanprobst/rehype-extract-toc";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import Icon from "#src/component/icon";
 import styles from "./header-toc.module.scss";
 import TocSection from "./toc-section";
 
@@ -71,7 +72,7 @@ export default function HeaderToc({ toc }: HeaderTocProps) {
             setTocOpen((prev) => !prev);
           }}
         >
-          <TocIcon fill="currentColor" width="1em" height="auto" />
+          <Icon component={TocIcon} />
         </IconButton>,
         headerToolEl,
       )}

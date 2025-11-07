@@ -9,7 +9,7 @@ export default async function TopPage() {
   const articles = await Article.allArticles("blog");
 
   return (
-    <Stack spacing={8} paddingBottom={5}>
+    <Stack spacing={8} paddingBottom={5} width="100%">
       <Banner />
       <Container>
         <Stack spacing={5}>

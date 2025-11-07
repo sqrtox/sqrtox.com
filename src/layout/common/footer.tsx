@@ -11,6 +11,7 @@ export default function Footer() {
       spacing={2}
       alignItems="center"
       justifyContent="center"
+      flexWrap="wrap"
     >
       <Copyright />
       <AcknowledgmentsLink />
