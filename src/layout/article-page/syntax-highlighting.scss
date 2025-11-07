@@ -1,4 +1,12 @@
 .content {
+  button:global(.rehype-pretty-copy) {
+    border: none;
+  }
+
+  span>code button:global(.rehype-pretty-copy) {
+    display: none;
+  }
+
   code[data-theme*=" "] {
     color: var(--shiki-light);
     background-color: var(--shiki-light-bg);

@@ -1,4 +1,5 @@
 import rehypeSectionize from "@hbsnow/rehype-sectionize";
+import { transformerCopyButton } from "@rehype-pretty/transformers";
 import rehypeExtractToc, { type Toc } from "@stefanprobst/rehype-extract-toc";
 import type { JSX } from "react";
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
@@ -48,6 +49,12 @@ export const compile = async (
         dark: "material-theme-darker",
         light: "material-theme-lighter",
       },
+      transformers: [
+        transformerCopyButton({
+          visibility: "hover",
+          feedbackDuration: 3_000,
+        }),
+      ],
     })
     .use(rehypeSlug)
     .use(rehypeAutolinkHeadings, {
