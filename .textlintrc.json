@@ -1,0 +1,36 @@
+{
+  "filters": {
+    "comments": true
+  },
+  "prh": {
+    "rulePaths": ["node_modules/textlint-rule-preset-icsmedia/dict/prh.yml"]
+  },
+  "rules": {
+    "preset-ja-spacing": {
+      "ja-space-around-code": {
+        "after": true,
+        "before": true
+      },
+      "ja-space-around-link": {
+        "after": true,
+        "before": true
+      },
+      "ja-space-between-half-and-full-width": {
+        "space": ["alphabets"]
+      }
+    },
+    "preset-ja-technical-writing": {
+      "ja-no-mixed-period": {
+        "allowEmojiAtEnd": true
+      },
+      "no-exclamation-question-mark": false,
+      "sentence-length": {
+        "max": 150
+      }
+    },
+    "preset-jtf-style": {
+      "2.2.1.ひらがなと漢字の使い分け": true,
+      "3.1.1.全角文字と半角文字の間": false
+    }
+  }
+}
