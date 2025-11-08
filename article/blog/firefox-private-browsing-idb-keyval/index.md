@@ -3,6 +3,11 @@ title: Firefoxのプライベートブラウジングでidb-keyvalが動かな�
 tags: programming javascript mozilla-firefox private-browsing idb-keyval localforage
 ---
 
+# 2025年11月7日追記
+
+この挙動はそもそも Firefox のプライベートブラウジングでは IndexedDB が使用できないことが原因だったが、Firefox の 144.0.2（64 ビット）バージョン時点ではエラーが出なくなっている。  
+読み書きも可能で、プライベートブラウジングを終了するまでは書き込んだ値は保持される。
+
 # 結論
 
 idb-keyval ではなく localforage を使用する。
@@ -32,8 +37,3 @@ DOMException: A mutation operation was attempted on a database that did not allo
 IndexedDB はまともに使ったことがないので原因はよくわからないが、エラーの内容的に特定の操作が Firefox のプライベートブラウジングで許可されていないのが原因だろう。
 
 Chrome ではこの問題は発生しなかった。
-
-# 2025年11月7日追記
-
-この挙動はそもそも Firefox のプライベートブラウジングでは IndexedDB が使用できないことが原因だったが、Firefox の 144.0.2（64 ビット）バージョン時点ではエラーが出なくなっている。  
-読み書きも可能で、プライベートブラウジングを終了するまでは書き込んだ値は保持される。
