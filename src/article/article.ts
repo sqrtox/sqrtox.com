@@ -1,4 +1,4 @@
-import { readFile, stat } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import type { Toc } from "@stefanprobst/rehype-extract-toc";
 import fm from "front-matter";
