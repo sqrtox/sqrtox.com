@@ -1,24 +1,22 @@
 import rehypeSectionize from "@hbsnow/rehype-sectionize";
 import { transformerCopyButton } from "@rehype-pretty/transformers";
 import rehypeExtractToc, { type Toc } from "@stefanprobst/rehype-extract-toc";
-import type { JSX } from "react";
-import { Fragment, jsx, jsxs } from "react/jsx-runtime";
+import { h } from "hastscript";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
+import rehypeStringify from "rehype-stringify";
 import remarkEmoji from "remark-emoji";
 import remarkGfm from "remark-gfm";
 import remarkGithubAlerts from "remark-github-alerts";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
-import OpenInNewIcon from "./open-in-new-icon";
+import { classes } from "./classes";
 import { type RehypeAssetsOptions, rehypeAssets } from "./rehype-assets";
+import { rehypeExtractText } from "./rehype-extract-text";
 import { rehypeFixFootnotes } from "./rehype-fix-footnotes";
 import { rehypeLinkDecoration } from "./rehype-link-decoration";
-import { rehypeReact } from "./rehype-react";
-
-const { renderToStaticMarkup } = await import("react-dom/server");
 
 export type Markdown = string;
 export type Html = string;
@@ -29,6 +27,7 @@ export interface CompileOptions {
 
 export interface CompiledData {
   html: Html;
+  text: string;
   toc?: Toc;
 }
 
@@ -66,13 +65,15 @@ export const compile = async (
           };
         }
 
+        element.properties.class = classes.articleContentHeading;
+
         const level = Number(element.tagName.slice(1));
 
         return {
           type: "element",
           tagName: "span",
           properties: {
-            class: "headingLink",
+            class: classes.headingLink,
           },
           children: [
             {
@@ -89,16 +90,14 @@ export const compile = async (
     .use(rehypeLinkDecoration)
     .use(rehypeSectionize)
     .use(rehypeExtractToc)
-    .use(rehypeReact, {
-      Fragment,
-      jsx,
-      jsxs,
-      components: {
-        "open-in-new-icon": OpenInNewIcon,
-      },
-    })
+    .use(rehypeExtractText)
+    .use(rehypeStringify)
     .process(markdown)
-    .then((file) => ({
-      html: renderToStaticMarkup(file.result as JSX.Element),
-      toc: file.data.toc,
-    }));
+    .then((file) => {
+      return {
+        html: String(file),
+        // TODO
+        text: file.data.text as string,
+        toc: file.data.toc,
+      };
+    });

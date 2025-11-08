@@ -112,4 +112,10 @@ export class Article {
 
     return html;
   }
+
+  async text(): Promise<string> {
+    const { text } = await this.#compile();
+
+    return text;
+  }
 }

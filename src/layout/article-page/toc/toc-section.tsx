@@ -3,10 +3,13 @@
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import type { Toc } from "@stefanprobst/rehype-extract-toc";
 import clsx from "clsx";
-import { type Ref, useEffect, useState } from "react";
+import { type Ref, useEffect } from "react";
+import { classes } from "#src/article/classes";
 import TocList from "./toc-list";
+import tocListStyles from "./toc-list.module.css";
 import styles from "./toc-section.module.css";
 
 export interface TocSectionProps {
@@ -16,13 +19,12 @@ export interface TocSectionProps {
 }
 
 export default function TocSection({ ref, toc, popper }: TocSectionProps) {
-  const [navEl, setNavEl] = useState<HTMLElement>();
+  const small = useMediaQuery("(max-width: 1200px)");
 
   useEffect(() => {
-    if (!navEl) return;
+    console.log(small);
 
-    const contentEl = document.getElementById("articleContent");
-    if (!contentEl) return;
+    if (small) return;
 
     const obs = new IntersectionObserver(
       ([entry]) => {
@@ -32,7 +34,7 @@ export default function TocSection({ ref, toc, popper }: TocSectionProps) {
           `${entry.target.id}-link`,
         );
 
-        for (const l of navEl.getElementsByTagName("a")) {
+        for (const l of document.getElementsByClassName(tocListStyles.link)) {
           l.classList.remove(styles.intersected);
         }
 
@@ -46,16 +48,20 @@ export default function TocSection({ ref, toc, popper }: TocSectionProps) {
       },
     );
 
-    for (const heading of contentEl.querySelectorAll(
-      "h1, h2, h3, h4, h5, h6",
+    for (const heading of document.getElementsByClassName(
+      classes.articleContentHeading,
     )) {
       obs.observe(heading);
     }
 
     return () => {
       obs.disconnect();
+
+      for (const l of document.getElementsByClassName(tocListStyles.link)) {
+        l.classList.remove(styles.intersected);
+      }
     };
-  }, [navEl]);
+  }, [small]);
 
   return (
     <Paper
@@ -68,13 +74,7 @@ export default function TocSection({ ref, toc, popper }: TocSectionProps) {
         <Typography component="h2" variant="h6">
           目次
         </Typography>
-        <nav
-          ref={(el) => {
-            if (el) {
-              setNavEl(el);
-            }
-          }}
-        >
+        <nav>
           <TocList toc={toc} />
         </nav>
       </Stack>
