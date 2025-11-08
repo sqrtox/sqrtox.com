@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
-import { readFile } from "node:fs/promises";
+import { readFile, stat } from "node:fs/promises";
 import { join, relative, sep } from "node:path";
 import type { Path } from "chokidar/handler.js";
 import simpleGit, { type SimpleGit } from "simple-git";
@@ -123,4 +123,52 @@ export const readRevision = async (path: Path): Promise<Commit[]> => {
   const revision = JSON.parse(revisionData);
 
   return revision;
+};
+
+export interface RevisionTime {
+  createdAt: Date;
+  updatedAt?: Date;
+}
+
+export const getRevisionTime = async (
+  commits: Commit[],
+  path: Path,
+): Promise<RevisionTime> => {
+  let oldest: Commit | undefined;
+  let latest: Commit | undefined;
+
+  for (const commit of commits) {
+    oldest ??= commit;
+    latest ??= commit;
+
+    if (commit.timestamp < oldest.timestamp) {
+      oldest = commit;
+    }
+
+    if (commit.timestamp > latest.timestamp) {
+      latest = commit;
+    }
+  }
+
+  if (latest?.hash === oldest?.hash) {
+    latest = undefined;
+  }
+
+  let createdAtTimestamp = oldest?.timestamp;
+  const updatedAtTimestamp = latest?.timestamp;
+
+  if (createdAtTimestamp === undefined) {
+    const stats = await stat(path);
+
+    createdAtTimestamp = stats.birthtimeMs;
+  }
+
+  const createdAt = new Date(createdAtTimestamp);
+  const updatedAt =
+    updatedAtTimestamp === undefined ? undefined : new Date(updatedAtTimestamp);
+
+  return {
+    createdAt,
+    updatedAt,
+  };
 };

@@ -5,7 +5,7 @@ import { join, parse } from "node:path";
 import { fileTypeFromBuffer } from "file-type";
 import { type AbsolutePath, ASSETS_DIR } from "#src/article/path";
 import { Rc } from "#src/util/rc";
-import { isNotePath } from "./note";
+import { Note } from "./note";
 
 export class Asset {
   readonly #srcPath: string;
@@ -63,15 +63,7 @@ export class AssetManager {
   readonly #assets: Map<string, Asset> = new Map();
 
   static isValidSrcPath(path: AbsolutePath): boolean {
-    if (parse(path).base === "index.md") {
-      return false;
-    }
-
-    if (isNotePath(path)) {
-      return false;
-    }
-
-    return true;
+    return parse(path).base !== "index.md" && !Note.isNotePath(path);
   }
 
   async create(path: string): Promise<void> {

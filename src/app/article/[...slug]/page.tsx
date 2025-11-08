@@ -45,15 +45,7 @@ export async function generateMetadata({
   }
 
   const article = await Article.create(slug, "blog");
-  const fullDescription = await article
-    .text()
-    .then((text) => text.replaceAll(/\s+/g, " "));
-  const long = fullDescription.length > 90;
-  let description = fullDescription.slice(0, 90);
-
-  if (long) {
-    description += "...";
-  }
+  const description = await article.description();
 
   return {
     title: article.title,

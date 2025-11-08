@@ -3,16 +3,3 @@
 @use "./heading.scss";
 @use "./image.scss";
 @use "./link.scss";
-
-.content {
-  padding: calc(3 * var(--mui-spacing));
-  flex: 1;
-  width: 100%;
-  min-width: 700px;
-}
-
-@media (max-width: 1200px) {
-  .content {
-    min-width: 0;
-  }
-}

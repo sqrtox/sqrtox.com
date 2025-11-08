@@ -1,4 +1,6 @@
+import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import InkPenIcon from "material-symbols/ink_pen.svg";
@@ -69,7 +71,11 @@ export default async function ArticlePage({ article }: ArticlePageProps) {
           )}
         </Stack>
         <div className={styles.contentContainer}>
-          <Content html={html} />
+          <Paper className={styles.contentPaper}>
+            <Box padding={3}>
+              <Content html={html} />
+            </Box>
+          </Paper>
           {toc !== undefined && toc.length > 0 && <TocSection toc={toc} />}
           {toc !== undefined && toc.length > 0 && toc && (
             <HeaderToc toc={toc} />

@@ -1,0 +1,10 @@
+.card {
+  flex-shrink: 0;
+}
+
+.cardText {
+  display: -webkit-box;
+  -moz-box-orient: vertical;
+  -webkit-line-clamp: 8;
+  line-clamp: 8px;
+}

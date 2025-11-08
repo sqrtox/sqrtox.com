@@ -1,0 +1,20 @@
+.text {
+  --line-clamp: 2;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: var(--line-clamp);
+  -webkit-line-clamp: var(--line-clamp);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardContent {
+  height: 200px;
+}
+
+@media (max-width: 1200px) {
+  .cardContent {
+    height: 210px;
+  }
+}

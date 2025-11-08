@@ -13,7 +13,7 @@ export default function Content({ html }: ContentProps) {
   return (
     <>
       <InternalLinkRouter />
-      <Paper
+      <div
         className={styles.content}
         // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
         dangerouslySetInnerHTML={{ __html: html }}

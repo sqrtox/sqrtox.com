@@ -3,7 +3,7 @@ import { mkdir, readdir, rm, writeFile } from "node:fs/promises";
 import { join, parse, relative, sep } from "node:path";
 import { type ParseArgsConfig, parseArgs } from "node:util";
 import type { ArticleBase } from "#src/article/article";
-import { isNotePath } from "#src/article/note";
+import { Note } from "#src/article/note";
 import {
   type AbsolutePath,
   ARTICLE_DIR,
@@ -36,7 +36,7 @@ const buildRevision = async (path: AbsolutePath): Promise<void> => {
   const p = parse(path);
   let revision: Commit[];
 
-  if (isNotePath(path)) {
+  if (Note.isNotePath(path)) {
     if (p.ext !== ".md") return;
 
     revision = await getNoteRevision(p.name);

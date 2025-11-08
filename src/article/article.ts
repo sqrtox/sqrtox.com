@@ -7,7 +7,7 @@ import { $object, $opt, $string } from "lizod";
 import tag from "#src/article/tag.json";
 import { type CompiledData, compile, type Html } from "./markdown";
 import { type AbsolutePath, ARTICLE_DIR, type RelativePath } from "./path";
-import { type Commit, readRevision } from "./revision";
+import { type Commit, getRevisionTime, readRevision } from "./revision";
 import { getAllSlugs, type Slug, type SlugPath } from "./slug";
 
 const WHITESPACES = /\s+/;
@@ -79,40 +79,7 @@ export class Article {
       .sort((a, b) => collator.compare(a.id, b.id));
 
     const commits = await readRevision(path);
-    let oldest: Commit | undefined;
-    let latest: Commit | undefined;
-
-    for (const commit of commits) {
-      oldest ??= commit;
-      latest ??= commit;
-
-      if (commit.timestamp < oldest.timestamp) {
-        oldest = commit;
-      }
-
-      if (commit.timestamp > latest.timestamp) {
-        latest = commit;
-      }
-    }
-
-    if (latest?.hash === oldest?.hash) {
-      latest = undefined;
-    }
-
-    let createdAtTimestamp = oldest?.timestamp;
-    const updatedAtTimestamp = latest?.timestamp;
-
-    if (createdAtTimestamp === undefined) {
-      const stats = await stat(path);
-
-      createdAtTimestamp = stats.birthtimeMs;
-    }
-
-    const createdAt = new Date(createdAtTimestamp);
-    const updatedAt =
-      updatedAtTimestamp === undefined
-        ? undefined
-        : new Date(updatedAtTimestamp);
+    const { createdAt, updatedAt } = await getRevisionTime(commits, path);
 
     return new Article(
       slugPath,
@@ -176,5 +143,19 @@ export class Article {
 
   async revision(): Promise<Commit[]> {
     return await readRevision(join(this.#dir, "index.md"));
+  }
+
+  async description(maxLength = 90): Promise<string> {
+    const fullDescription = await this.text().then((text) =>
+      text.replaceAll(/\s+/g, " "),
+    );
+    const long = fullDescription.length > maxLength;
+    let description = fullDescription.slice(0, maxLength);
+
+    if (long) {
+      description += "...";
+    }
+
+    return description;
   }
 }
