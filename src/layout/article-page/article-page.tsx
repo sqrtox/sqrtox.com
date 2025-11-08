@@ -4,8 +4,8 @@ import Typography from "@mui/material/Typography";
 import type { Article } from "#src/article/article";
 import styles from "./article-page.module.css";
 import Content from "./content/content";
-import HeaderToc from "./toc/header-toc";
 import TagLink from "./tag-link";
+import HeaderToc from "./toc/header-toc";
 import TocSection from "./toc/toc-section";
 
 export interface ArticlePageProps {
