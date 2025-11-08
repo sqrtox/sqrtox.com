@@ -1,7 +1,5 @@
 "use client";
 
-import ChevronLeftIcon from "@material-symbols/svg-400/outlined/chevron_left.svg";
-import SearchOffIcon from "@material-symbols/svg-400/outlined/search_off.svg";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Fade from "@mui/material/Fade";
@@ -9,6 +7,8 @@ import MuiLink from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import ChevronLeftIcon from "material-symbols/chevron_left.svg";
+import SearchOffIcon from "material-symbols/search_off.svg";
 import NextLink from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import Icon from "#src/component/icon";

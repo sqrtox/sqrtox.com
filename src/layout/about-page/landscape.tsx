@@ -1,9 +1,9 @@
 "use client";
 
-import DarkModeIcon from "@material-symbols/svg-400/outlined/dark_mode-fill.svg";
-import LightModeIcon from "@material-symbols/svg-400/outlined/light_mode-fill.svg";
 import Box from "@mui/material/Box";
 import { useColorScheme } from "@mui/material/styles";
+import DarkModeIcon from "material-symbols/dark_mode-fill.svg";
+import LightModeIcon from "material-symbols/light_mode-fill.svg";
 import Icon from "#src/component/icon";
 import styles from "./landscape.module.scss";
 

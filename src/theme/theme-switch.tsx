@@ -1,10 +1,10 @@
 "use client";
 
-import DarkModeIcon from "@material-symbols/svg-400/outlined/dark_mode-fill.svg";
-import LightModeIcon from "@material-symbols/svg-400/outlined/light_mode-fill.svg";
 import Switch from "@mui/material/Switch";
 import { useColorScheme, useTheme } from "@mui/material/styles";
 import clsx from "clsx";
+import DarkModeIcon from "material-symbols/dark_mode-fill.svg";
+import LightModeIcon from "material-symbols/light_mode-fill.svg";
 import type { ReactNode } from "react";
 import styles from "./theme-switch.module.scss";
 

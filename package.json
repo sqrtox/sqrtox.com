@@ -4,16 +4,18 @@
     "url": "https://github.com/sqrtox/sqrtox.com/issues"
   },
   "dependencies": {
+    "@date-fns/tz": "^1.4.1",
     "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@hbsnow/rehype-sectionize": "^1.0.7",
-    "@material-symbols/svg-400": "^0.39.1",
+    "@material-symbols/svg-700": "^0.39.1",
     "@mui/material": "^7.3.4",
     "@mui/material-nextjs": "^7.3.3",
     "@rehype-pretty/transformers": "^0.13.2",
     "@stefanprobst/rehype-extract-toc": "^3.0.0",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "file-type": "^21.0.0",
     "front-matter": "^4.0.2",
     "hast-util-from-html": "^2.0.3",
@@ -35,6 +37,7 @@
     "remark-github-alerts": "^0.1.1",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
+    "simple-git": "^3.30.0",
     "unified": "^11.0.5"
   },
   "description": "A personal blog sharing everyday thoughts and tech notes.",
@@ -47,6 +50,7 @@
     "@types/react-dom": "^19.2.2",
     "babel-plugin-react-compiler": "^1.0.0",
     "chokidar": "^4.0.3",
+    "husky": "^9.1.7",
     "npm-run-all2": "^8.0.4",
     "rimraf": "^6.1.0",
     "serve": "^14.2.5",
@@ -78,11 +82,13 @@
     "build": "run-s build:assets build:next",
     "build:assets": "run-s assets",
     "build:next": "next build",
-    "dev": "run-p dev:next dev:assets",
-    "dev:assets": "run-s \"assets --watch\"",
-    "dev:next": "NEXT_PUBLIC_BASE_URL=http://localhost:3000 next dev",
+    "dev": "run-p dev:s \"assets --watch\"",
+    "dev:s": "run-s revision dev:s:next",
+    "dev:s:next": "NEXT_PUBLIC_BASE_URL=http://localhost:3000 next dev",
+    "prepare": "husky",
     "preview": "NEXT_PUBLIC_BASE_URL=http://localhost:3000 run-s build preview:serve",
-    "preview:serve": "serve out"
+    "preview:serve": "serve out",
+    "revision": "tsx scripts/revision.ts"
   },
   "trustedDependencies": [
     "@parcel/watcher",

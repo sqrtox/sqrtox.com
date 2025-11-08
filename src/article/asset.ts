@@ -1,10 +1,11 @@
 import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
 import { cp, mkdir, readFile, rm } from "node:fs/promises";
-import { join, parse, relative, sep } from "node:path";
+import { join, parse } from "node:path";
 import { fileTypeFromBuffer } from "file-type";
-import { ASSETS_DIR, NOTE_DIR } from "#src/article/path";
+import { type AbsolutePath, ASSETS_DIR } from "#src/article/path";
 import { Rc } from "#src/util/rc";
+import { isNotePath } from "./note";
 
 export class Asset {
   readonly #srcPath: string;
@@ -61,14 +62,12 @@ export class AssetManager {
   readonly #counter: Rc<string> = new Rc();
   readonly #assets: Map<string, Asset> = new Map();
 
-  static isValidSrcPath(path: string): boolean {
+  static isValidSrcPath(path: AbsolutePath): boolean {
     if (parse(path).base === "index.md") {
       return false;
     }
 
-    const rel = relative(NOTE_DIR, path).replaceAll(sep, "/");
-
-    if (!rel.startsWith("../")) {
+    if (isNotePath(path)) {
       return false;
     }
 

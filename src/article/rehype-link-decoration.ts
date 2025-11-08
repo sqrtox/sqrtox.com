@@ -9,7 +9,7 @@ import { ROOT_DIR } from "./path";
 
 const OPEN_IN_NEW_ICON_PATH = join(
   ROOT_DIR,
-  "node_modules/@material-symbols/svg-400/outlined/open_in_new.svg",
+  "node_modules/@material-symbols/svg-700/outlined/open_in_new.svg",
 );
 
 const OPEN_IN_NEW_ICON_SVG = await readFile(OPEN_IN_NEW_ICON_PATH, "utf8");

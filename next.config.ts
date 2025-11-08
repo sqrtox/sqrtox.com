@@ -12,7 +12,11 @@ export const nextConfig: NextConfig = {
     parallelServerCompiles: true,
     webpackBuildWorker: true,
   },
+  transpilePackages: ["@date-fns/tz"],
   turbopack: {
+    resolveAlias: {
+      "material-symbols/*": "@material-symbols/svg-700/outlined/*",
+    },
     rules: {
       "*.svg": {
         loaders: ["@svgr/webpack"],

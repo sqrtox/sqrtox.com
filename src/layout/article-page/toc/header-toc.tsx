@@ -1,10 +1,10 @@
 "use client";
 
-import TocIcon from "@material-symbols/svg-400/outlined/toc.svg";
 import IconButton from "@mui/material/IconButton";
 import Popper from "@mui/material/Popper";
 import type { Toc } from "@stefanprobst/rehype-extract-toc";
 import clsx from "clsx";
+import TocIcon from "material-symbols/toc.svg";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Icon from "#src/component/icon";

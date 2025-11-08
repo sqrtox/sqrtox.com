@@ -1,6 +1,6 @@
-import OpenInNewIcon from "@material-symbols/svg-400/outlined/open_in_new.svg";
 import MuiLink from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
+import OpenInNewIcon from "material-symbols/open_in_new.svg";
 import Icon from "#src/component/icon";
 import styles from "./sns-link.module.css";
 

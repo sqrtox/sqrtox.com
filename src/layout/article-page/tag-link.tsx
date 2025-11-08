@@ -1,9 +1,10 @@
 "use client";
 
-import TagIcon from "@material-symbols/svg-400/outlined/tag.svg";
 import Chip from "@mui/material/Chip";
+import TagIcon from "material-symbols/tag.svg";
 import NextLink from "next/link";
 import type { ArticleTag } from "#src/article/article";
+import Icon from "#src/component/icon";
 
 export interface TagLinkProps {
   tag: ArticleTag;
@@ -16,8 +17,7 @@ export default function TagLink({ tag }: TagLinkProps) {
       component={NextLink}
       href={`/tag/${encodeURIComponent(tag.id)}`}
       size="small"
-      icon={<TagIcon fill="currentColor" width="1em" height="1em" />}
-      key={tag.id}
+      icon={<Icon style={{ fontSize: "1.5rem" }} component={TagIcon} />}
       label={tag.label}
     />
   );

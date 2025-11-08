@@ -22,8 +22,6 @@ export default function TocSection({ ref, toc, popper }: TocSectionProps) {
   const small = useMediaQuery("(max-width: 1200px)");
 
   useEffect(() => {
-    console.log(small);
-
     if (small) return;
 
     const obs = new IntersectionObserver(
