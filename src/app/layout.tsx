@@ -19,7 +19,9 @@ export const metadata: Metadata = {
 export default function Layout({ children }: PropsWithChildren) {
   return (
     <html lang="ja" className={styles.root} suppressHydrationWarning>
-      <head />
+      <head>
+        <meta name="apple-mobile-web-app-title" content="sqrtox's Blog" />
+      </head>
       <body>
         <ThemeProvider>
           <CommonLayout>{children}</CommonLayout>
