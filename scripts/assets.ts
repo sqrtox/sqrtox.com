@@ -44,9 +44,12 @@ if (args.values.watch) {
 
   for (const dirent of dirents) {
     if (!dirent.isFile()) continue;
-    if (dirent.name === "index.md") continue;
 
-    const asset = await Asset.create(join(dirent.parentPath, dirent.name));
+    const path = join(dirent.parentPath, dirent.name);
+
+    if (!AssetManager.isValidSrcPath(path)) continue;
+
+    const asset = await Asset.create(path);
 
     await asset.write();
   }

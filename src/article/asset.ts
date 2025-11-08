@@ -61,7 +61,7 @@ export class AssetManager {
   readonly #counter: Rc<string> = new Rc();
   readonly #assets: Map<string, Asset> = new Map();
 
-  static #isValidSrcPath(path: string): boolean {
+  static isValidSrcPath(path: string): boolean {
     if (parse(path).base === "index.md") {
       return false;
     }
@@ -76,7 +76,7 @@ export class AssetManager {
   }
 
   async create(path: string): Promise<void> {
-    if (!AssetManager.#isValidSrcPath(path)) return;
+    if (!AssetManager.isValidSrcPath(path)) return;
     if (this.#assets.has(path)) return;
 
     const asset = await Asset.create(path);
@@ -87,7 +87,7 @@ export class AssetManager {
   }
 
   async revoke(path: string): Promise<void> {
-    if (!AssetManager.#isValidSrcPath(path)) return;
+    if (!AssetManager.isValidSrcPath(path)) return;
 
     const asset = this.#assets.get(path);
     if (!asset) return;
