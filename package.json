@@ -79,7 +79,7 @@
   },
   "scripts": {
     "assets": "tsx scripts/assets.ts",
-    "build": "run-s build:assets build:next",
+    "build": "run-s revision build:assets build:next",
     "build:assets": "run-s assets",
     "build:next": "next build",
     "dev": "run-p dev:s \"assets --watch\"",
