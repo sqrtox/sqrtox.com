@@ -1,0 +1,11 @@
+.list {
+  --height: 30px;
+
+  max-height: var(--height);
+}
+
+@media (max-width: 900px) {
+  .list {
+    max-height: calc(2 * var(--height));
+  }
+}

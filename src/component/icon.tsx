@@ -11,5 +11,7 @@ export interface IconOwnProps {
 export type IconProps = SVGProps<SVGSVGElement> & IconOwnProps;
 
 export default function Icon({ component: Component, ...props }: IconProps) {
-  return <Component className={clsx(styles.icon, props.className)} />;
+  return (
+    <Component {...props} className={clsx(styles.icon, props.className)} />
+  );
 }

@@ -5,16 +5,21 @@ import ChevronRightIcon from "material-symbols/chevron_right.svg";
 import NextLink from "next/link";
 import Icon from "#src/component/icon";
 
-export default function ArticlesLink() {
+export interface SectionLinkProps {
+  href: string;
+  label: string;
+}
+
+export default function SectionLink({ href, label }: SectionLinkProps) {
   return (
     <MuiLink
       component={NextLink}
-      href="/articles"
+      href={href}
       display="inline-flex"
       alignItems="center"
       gap="calc(0.5 * var(--mui-spacing))"
     >
-      すべての記事
+      {label}
       <Icon component={ChevronRightIcon} />
     </MuiLink>
   );

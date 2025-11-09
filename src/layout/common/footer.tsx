@@ -1,5 +1,4 @@
 import Stack from "@mui/material/Stack";
-import AcknowledgmentsLink from "./acknowledgments-link";
 import Copyright from "./copyright";
 
 export default function Footer() {
@@ -14,7 +13,6 @@ export default function Footer() {
       flexWrap="wrap"
     >
       <Copyright />
-      <AcknowledgmentsLink />
     </Stack>
   );
 }

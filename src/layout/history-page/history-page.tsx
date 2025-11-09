@@ -19,11 +19,16 @@ export default function HistoryPage({ article }: HistoryPageProps) {
         <div>
           <BackwardLink href={`/article/${article.slug}`} />
         </div>
-        <HistoryList
-          commits={article.commits.toSorted(
-            (a, b) => b.timestamp - a.timestamp,
-          )}
-        />
+        {article.commits.length > 0 && (
+          <HistoryList
+            commits={article.commits.toSorted(
+              (a, b) => b.timestamp - a.timestamp,
+            )}
+          />
+        )}
+        {article.commits.length <= 0 && (
+          <Typography>まだ更新はありません</Typography>
+        )}
       </Stack>
     </Container>
   );

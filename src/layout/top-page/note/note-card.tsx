@@ -17,7 +17,7 @@ export interface NoteCardProps {
 export default function NoteCard({ note, onClick }: NoteCardProps) {
   return (
     <Card className={styles.card}>
-      <CardActionArea onClick={onClick}>
+      <CardActionArea onClick={onClick} disableRipple>
         <Stack padding={2} spacing={1} width={250} height={300}>
           <NoteTime time={note.time} />
           <Typography

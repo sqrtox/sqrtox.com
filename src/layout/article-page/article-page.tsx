@@ -3,11 +3,10 @@ import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import InkPenIcon from "material-symbols/ink_pen.svg";
+import CalendarMonthIcon from "material-symbols/calendar_month.svg";
 import UpdateIcon from "material-symbols/update.svg";
 import type { Article } from "#src/article/article";
-import Icon from "#src/component/icon";
-import { formatArticleDate } from "#src/util/date";
+import ArticleTime from "#src/article/article-time";
 import styles from "./article-page.module.css";
 import Content from "./content/content";
 import HistoryLink from "./history-link";
@@ -39,25 +38,9 @@ export default async function ArticlePage({ article }: ArticlePageProps) {
             justifyContent="space-between"
           >
             <Stack direction="row" spacing={2} alignItems="center">
-              <Stack direction="row" spacing={0.5} alignItems="center">
-                <Icon component={InkPenIcon} />
-                <Typography
-                  component="time"
-                  dateTime={article.createdAt.toISOString()}
-                >
-                  {formatArticleDate(article.createdAt)}
-                </Typography>
-              </Stack>
+              <ArticleTime icon={CalendarMonthIcon} time={article.createdAt} />
               {article.updatedAt !== undefined && (
-                <Stack direction="row" spacing={0.5} alignItems="center">
-                  <Icon component={UpdateIcon} />
-                  <Typography
-                    component="time"
-                    dateTime={article.updatedAt.toISOString()}
-                  >
-                    {formatArticleDate(article.updatedAt)}
-                  </Typography>
-                </Stack>
+                <ArticleTime icon={UpdateIcon} time={article.updatedAt} />
               )}
             </Stack>
             <HistoryLink href={`/article/${article.slug}/history`} />
@@ -65,7 +48,7 @@ export default async function ArticlePage({ article }: ArticlePageProps) {
           {article.tags.length > 0 && (
             <Stack direction="row" spacing={1} flexWrap="wrap">
               {article.tags.map((tag) => (
-                <TagLink key={tag.id} tag={tag} />
+                <TagLink link key={tag.id} tag={tag} />
               ))}
             </Stack>
           )}

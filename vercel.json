@@ -1,0 +1,8 @@
+{
+  "buildCommand": "NEXT_PUBLIC_BASE_URL=https://sqrtox.com bun run build",
+  "git": {
+    "deploymentEnabled": {
+      "main": false
+    }
+  }
+}
