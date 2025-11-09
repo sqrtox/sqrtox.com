@@ -7,6 +7,7 @@ import CalendarMonthIcon from "material-symbols/calendar_month.svg";
 import UpdateIcon from "material-symbols/update.svg";
 import type { Article } from "#src/article/article";
 import ArticleTime from "#src/article/article-time";
+import { routes } from "#src/util/route";
 import styles from "./article-page.module.css";
 import Content from "./content/content";
 import HistoryLink from "./history-link";
@@ -43,7 +44,7 @@ export default async function ArticlePage({ article }: ArticlePageProps) {
                 <ArticleTime icon={UpdateIcon} time={article.updatedAt} />
               )}
             </Stack>
-            <HistoryLink href={`/article/${article.slug}/history`} />
+            <HistoryLink href={routes.articleHistory(article.slug)} />
           </Stack>
           {article.tags.length > 0 && (
             <Stack direction="row" spacing={1} flexWrap="wrap">

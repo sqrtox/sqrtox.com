@@ -1,6 +1,7 @@
 import Stack from "@mui/material/Stack";
 import { Article, type ArticleTag } from "#src/article/article";
 import TAG from "#src/article/tag.json";
+import { routes } from "#src/util/route";
 import TagLink from "../article-page/tag-link";
 import SectionLink from "./section-link";
 import styles from "./tag-section.module.css";
@@ -46,7 +47,7 @@ export default async function TagSection() {
         ))}
       </Stack>
       <div>
-        <SectionLink label="すべてのタグ" href="/tags" />
+        <SectionLink label="すべてのタグ" href={routes.tags} />
       </div>
     </Stack>
   );

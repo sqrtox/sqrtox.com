@@ -2,6 +2,7 @@ import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import type { Article } from "#src/article/article";
+import { routes } from "#src/util/route";
 import BackwardLink from "./backward-link";
 import HistoryList from "./history-list";
 
@@ -17,7 +18,7 @@ export default function HistoryPage({ article }: HistoryPageProps) {
           記事の履歴
         </Typography>
         <div>
-          <BackwardLink href={`/article/${article.slug}`} />
+          <BackwardLink href={routes.article(article.slug)} />
         </div>
         {article.commits.length > 0 && (
           <HistoryList

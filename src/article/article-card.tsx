@@ -10,6 +10,7 @@ import CalendarMonthIcon from "material-symbols/calendar_month.svg";
 import UpdateIcon from "material-symbols/update.svg";
 import NextLink from "next/link";
 import TagLink from "#src/layout/article-page/tag-link";
+import { routes } from "#src/util/route";
 import type { ArticleTag } from "./article";
 import styles from "./article-card.module.css";
 import ArticleTime from "./article-time";
@@ -39,7 +40,7 @@ export default function ArticleCard({
     <Card className={styles.expand}>
       <CardActionArea
         LinkComponent={NextLink}
-        href={`/article/${slug}`}
+        href={routes.article(slug)}
         className={styles.expand}
       >
         <Stack

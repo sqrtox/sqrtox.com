@@ -12,6 +12,7 @@ import SearchOffIcon from "material-symbols/search_off.svg";
 import NextLink from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import Icon from "#src/component/icon";
+import { routes } from "#src/util/route";
 import DelButton from "./del";
 import NekoButton from "./neko";
 import styles from "./not-found-page.module.css";
@@ -86,7 +87,7 @@ export default function NotFoundPage() {
               >
                 <MuiLink
                   component={NextLink}
-                  href="/"
+                  href={routes.home}
                   display="flex"
                   alignItems="center"
                   fontSize="large"

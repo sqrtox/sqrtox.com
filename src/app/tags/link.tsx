@@ -7,6 +7,7 @@ import TagIcon from "material-symbols/tag.svg";
 import NextLink from "next/link";
 import type { ArticleTag } from "#src/article/article";
 import Icon from "#src/component/icon";
+import { routes } from "#src/util/route";
 
 export interface LinkProps {
   tag: ArticleTag;
@@ -28,7 +29,7 @@ export default function Link({ tag, count, scale }: LinkProps) {
         paddingBottom: "0.1rem",
       }}
       component={NextLink}
-      href={`/tag/${tag.id}`}
+      href={routes.tag(tag.id)}
       label={
         <Stack
           component="span"
