@@ -76,7 +76,7 @@ export default function HeaderToc({ toc }: HeaderTocProps) {
         </IconButton>,
         headerToolEl,
       )}
-      {
+      {tocButtonEl !== undefined && (
         <Popper
           className={clsx(!tocOpen && styles.hidden, styles.popper)}
           open
@@ -105,7 +105,7 @@ export default function HeaderToc({ toc }: HeaderTocProps) {
             }}
           />
         </Popper>
-      }
+      )}
     </>
   );
 }

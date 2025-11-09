@@ -7,9 +7,11 @@
 }
 
 @media (min-width: 1200px) {
-
-  :global(.MuiButtonBase-root).tocButton,
   .popper {
     display: none;
+  }
+
+  :global(.MuiButtonBase-root).tocButton {
+    visibility: hidden;
   }
 }
