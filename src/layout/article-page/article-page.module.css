@@ -1,0 +1,25 @@
+.contentContainer {
+  display: flex;
+  flex-direction: row;
+  gap: calc(3 * var(--mui-spacing));
+  align-items: flex-start;
+}
+
+@media (max-width: 1200px) {
+  .contentContainer {
+    flex-direction: column-reverse;
+    justify-content: stretch;
+  }
+}
+
+.contentPaper {
+  flex: 1;
+  width: 100%;
+  min-width: 700px;
+}
+
+@media (max-width: 1200px) {
+  .contentPaper {
+    min-width: 0;
+  }
+}

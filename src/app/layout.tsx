@@ -1,13 +1,11 @@
+import type { Metadata } from "next";
 import type { PropsWithChildren } from "react";
-import styles from "#src/app/layout.module.scss";
-import CommonLayout from "#src/layouts/common/layout";
-import { primaryFont } from "#src/theme/fonts";
-import ThemeProvider from "#src/theme/provider";
+import styles from "#src/app/layout.module.css";
+import CommonLayout from "#src/layout/common/common-layout";
+import ThemeProvider from "#src/theme/theme-provider";
 
-const dev = process.env.NODE_ENV === "development";
-
-export const metadata = {
-  metadataBase: new URL(dev ? "http://localhost:3000" : "https://sqrtox.com"),
+export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL),
   title: {
     template: "%s | sqrtox's Blog",
     absolute: "sqrtox's Blog - 備忘録的な技術ブログ",
@@ -20,11 +18,11 @@ export const metadata = {
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
-    <html lang="ja" suppressHydrationWarning className={styles.root}>
+    <html lang="ja" className={styles.root} suppressHydrationWarning>
       <head>
         <meta name="apple-mobile-web-app-title" content="sqrtox's Blog" />
       </head>
-      <body className={primaryFont.variable} suppressHydrationWarning>
+      <body>
         <ThemeProvider>
           <CommonLayout>{children}</CommonLayout>
         </ThemeProvider>

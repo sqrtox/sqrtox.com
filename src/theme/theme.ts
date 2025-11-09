@@ -6,7 +6,7 @@ import type {} from "@mui/material/themeCssVarsAugmentation";
 import {
   dark,
   light,
-} from "node_modules/@mui/material/esm/styles/createPalette";
+} from "#src/../node_modules/@mui/material/esm/styles/createPalette";
 
 declare module "@mui/material/styles" {
   interface SkyPalette {
@@ -31,8 +31,8 @@ declare module "@mui/material/styles" {
 
 export const theme = createTheme({
   typography: {
-    fontFamily: "var(--primaryFont)",
-    fontSize: 15,
+    fontFamily: "var(--primary-font)",
+    fontSize: 16,
   },
   components: {
     MuiStack: {
@@ -49,16 +49,20 @@ export const theme = createTheme({
     dark: {
       palette: {
         background: {
+          paper: "#111",
           paperSecondary: emphasize(dark.background.default, 0.1),
+        },
+        primary: {
+          main: lightBlue[400],
+        },
+        text: {
+          primary: grey[300],
         },
         sky: {
           default: blue[800],
           light: yellow[800],
         },
         wave: blue[500],
-        primary: {
-          main: lightBlue[400],
-        },
       },
     },
     light: {
@@ -69,6 +73,9 @@ export const theme = createTheme({
         },
         primary: {
           main: blue[600],
+        },
+        text: {
+          primary: grey[800],
         },
         sky: {
           default: blue[300],

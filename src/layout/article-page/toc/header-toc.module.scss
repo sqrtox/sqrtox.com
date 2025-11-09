@@ -1,0 +1,15 @@
+.popper {
+  z-index: var(--mui-zIndex-modal);
+}
+
+.hidden {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+
+  :global(.MuiButtonBase-root).tocButton,
+  .popper {
+    display: none;
+  }
+}

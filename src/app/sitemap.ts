@@ -1,70 +1,76 @@
 import type { MetadataRoute } from "next";
-import type { ArticleTimestamp } from "#src/article/article";
-import { articleManager, rootArticleManager } from "#src/article/manager";
+import { Article } from "#src/article/article";
+import TAG from "#src/article/tag.json";
 
 export const dynamic = "force-static";
 export const revalidate = false;
 
-interface ArticleObject {
-  slug: string;
-  timestamp: ArticleTimestamp;
-}
-
-const createArticlesSitemap = (
-  articles: ArticleObject[],
-  priority: number,
-  pathname: (article: ArticleObject) => string,
-): MetadataRoute.Sitemap =>
-  articles.flatMap((a) => {
-    const p = pathname(a);
-    const timestamp = a.timestamp.updatedAt ?? a.timestamp.createdAt;
-    const lastModified =
-      timestamp !== undefined ? new Date(timestamp).toISOString() : undefined;
-
-    return [
-      {
-        url: `https://www.sqrtox.com${p}`,
-        lastModified,
-        changeFrequency: "monthly",
-        priority,
-      },
-      {
-        url: `https://www.sqrtox.com${p}/history`,
-        lastModified,
-        changeFrequency: "monthly",
-        priority: 0.5,
-      },
-    ];
-  });
-
-export default async function (): Promise<MetadataRoute.Sitemap> {
-  const rootArticles: ArticleObject[] = await Promise.all(
-    [...(await rootArticleManager.articles())].map(async (a) => ({
-      ...a,
-      timestamp: await a.timestamp(),
-    })),
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const articles = await Article.allArticles("blog");
+  const updated = articles.filter((article) => article.updatedAt !== undefined);
+  const lastCreated = Math.max(
+    ...articles.map((article) => article.createdAt.getTime()),
   );
-  const articles: ArticleObject[] = await Promise.all(
-    [...(await articleManager.articles())].map(async (a) => ({
-      ...a,
-      timestamp: await a.timestamp(),
-    })),
+  const lastUpdated = Math.max(
+    ...updated.map((article) =>
+      (article.updatedAt ?? article.createdAt).getTime(),
+    ),
   );
 
-  return [
+  const sitemap: MetadataRoute.Sitemap = [
     {
-      url: "https://www.sqrtox.com",
-      lastModified: "2025-06-13",
-      changeFrequency: "weekly",
+      url: "/",
       priority: 1,
+      changeFrequency: "weekly",
+      lastModified: new Date(),
     },
     {
-      url: "https://www.sqrtox.com/about",
-      lastModified: "2025-06-13",
-      changeFrequency: "yearly",
-      priority: 0.6,
+      url: "/about",
+      priority: 0.7,
+      changeFrequency: "monthly",
+      lastModified: new Date(),
     },
-    ...createArticlesSitemap(rootArticles, 0.6, (a) => `/${a.slug}`),
-    ...createArticlesSitemap(articles, 0.8, (a) => `/article/${a.slug}`),
+    {
+      url: "/latest",
+      priority: 0.7,
+      changeFrequency: "weekly",
+      lastModified: new Date(lastCreated),
+    },
+    {
+      url: "/updated",
+      priority: 0.6,
+      changeFrequency: "weekly",
+      lastModified: new Date(lastUpdated),
+    },
+    {
+      url: "/tags",
+      priority: 0.5,
+      changeFrequency: "weekly",
+      lastModified: new Date(),
+    },
   ];
+
+  for (const article of articles) {
+    sitemap.push({
+      url: `/article/${article.slug}`,
+      priority: 0.8,
+      changeFrequency: "monthly",
+      lastModified: article.updatedAt ?? article.createdAt,
+    });
+  }
+
+  for (const id of Object.keys(TAG)) {
+    sitemap.push({
+      url: `/tag/${id}`,
+      priority: 0.5,
+      changeFrequency: "weekly",
+      lastModified: new Date(),
+    });
+  }
+
+  for (const url of sitemap) {
+    url.url = new URL(url.url, process.env.NEXT_PUBLIC_BASE_URL).href;
+  }
+
+  return sitemap;
 }

@@ -1,0 +1,23 @@
+.expand {
+  height: 100%;
+}
+
+.title[class] {
+  line-height: 1.3;
+  padding: calc(0.1 * var(--mui-spacing));
+}
+
+.text {
+  --line-clamp: 2;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: var(--line-clamp);
+  -webkit-line-clamp: var(--line-clamp);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.preview {
+  height: calc(1.5 * 2em);
+}

@@ -1,2 +1,3 @@
-# sqrtox.vercel.app
-This is a personal blog.
+# sqrtox.com
+
+A personal blog sharing everyday thoughts and tech notes.

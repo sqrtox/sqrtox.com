@@ -1,16 +1,32 @@
-import type { Brand } from "#src/brand";
+import { existsSync } from "node:fs";
+import { readdir } from "node:fs/promises";
+import { join, relative, sep } from "node:path";
+import type { ArticleBase } from "./article";
+import { ARTICLE_DIR, type RelativePath } from "./path";
 
-const SLUG = /^[a-z\d-]+$/;
+export type SlugPart = string;
+export type Slug = SlugPart[];
+export type SlugPath = RelativePath;
 
-export type UnsafeSlug = string;
+export const getAllSlugs = async (base: ArticleBase): Promise<Slug[]> => {
+  const slugs: Slug[] = [];
+  const baseDir = join(ARTICLE_DIR, base);
+  const dirents = await readdir(baseDir, {
+    withFileTypes: true,
+    recursive: true,
+  });
 
-export type SafeSlug = Brand<string, "safeSlug">;
+  for (const dirent of dirents) {
+    if (!dirent.isDirectory()) continue;
 
-type ValidateSlug = (slug: UnsafeSlug) => asserts slug is SafeSlug;
+    const dirPath = join(dirent.parentPath, dirent.name);
 
-export const validateSlug: ValidateSlug = (slug) => {
-  const invalidSlug = () => new Error(`Invalid slug "${slug}"`);
+    if (!existsSync(join(dirPath, "index.md"))) continue;
 
-  if (typeof slug !== "string") throw invalidSlug();
-  if (!SLUG.test(slug)) throw invalidSlug();
+    const slug = relative(baseDir, dirPath).replaceAll(sep, "/").split("/");
+
+    slugs.push(slug);
+  }
+
+  return slugs;
 };

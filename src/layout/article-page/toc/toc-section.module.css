@@ -1,0 +1,24 @@
+.toc {
+  position: sticky;
+  top: calc(10 * var(--mui-spacing));
+  left: 0;
+  width: 300px;
+}
+
+.intersected {
+  background-color: var(--mui-palette-action-hover);
+  color: var(--mui-palette-text-primary);
+}
+
+@media (max-width: 1200px) {
+  .toc.popperToc {
+    max-width: 85svw;
+  }
+}
+
+@media (max-width: 1200px) {
+  .toc {
+    width: 100%;
+    position: static;
+  }
+}

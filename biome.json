@@ -1,7 +1,14 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.2/schema.json",
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    },
+    "enabled": true
+  },
   "files": {
-    "ignore": ["public"],
     "ignoreUnknown": false
   },
   "formatter": {
@@ -18,25 +25,8 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "all": true,
-      "complexity": {
-        "noExcessiveCognitiveComplexity": "off"
-      },
-      "correctness": {
-        "all": false,
-        "recommended": true
-      },
-      "style": {
-        "all": false,
-        "recommended": true
-      },
-      "suspicious": {
-        "noReactSpecificProps": "off"
-      }
+      "recommended": true
     }
-  },
-  "organizeImports": {
-    "enabled": true
   },
   "vcs": {
     "clientKind": "git",

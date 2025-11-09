@@ -107,7 +107,7 @@
 
     document.addEventListener("mousemove", function handler(event) {
       if (!nekoEl.isConnected) {
-        document.removeEventListener("mousemove", handler)
+        document.removeEventListener("mousemove", handler);
 
         return;
       }
@@ -170,7 +170,7 @@
       }
       idleAnimation =
         avalibleIdleAnimations[
-        Math.floor(Math.random() * avalibleIdleAnimations.length)
+          Math.floor(Math.random() * avalibleIdleAnimations.length)
         ];
     }
 

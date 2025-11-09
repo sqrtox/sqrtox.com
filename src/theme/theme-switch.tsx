@@ -1,12 +1,11 @@
 "use client";
 
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import LightModeIcon from "@mui/icons-material/LightMode";
 import Switch from "@mui/material/Switch";
 import { useColorScheme, useTheme } from "@mui/material/styles";
+import clsx from "clsx";
+import DarkModeIcon from "material-symbols/dark_mode-fill.svg";
+import LightModeIcon from "material-symbols/light_mode-fill.svg";
 import type { ReactNode } from "react";
-import { classes } from "#src/classes";
-import ThemeSwitchThumb from "#src/theme/theme-switch-thumb";
 import styles from "./theme-switch.module.scss";
 
 export default function ThemeSwitch(): ReactNode {
@@ -26,26 +25,17 @@ export default function ThemeSwitch(): ReactNode {
       onChange={(_event, checked) => {
         setColorScheme(checked ? "dark" : "light");
       }}
-      className={classes(
-        isNotInitialized && styles.switchHidden,
-        styles.switch,
-      )}
+      className={clsx(isNotInitialized && styles.switchHidden, styles.switch)}
       disableRipple
       icon={
-        <ThemeSwitchThumb bgcolor={theme.vars.palette.sky.default}>
-          <LightModeIcon
-            fontSize="small"
-            htmlColor={theme.vars.palette.sky.light}
-          />
-        </ThemeSwitchThumb>
+        <div className={styles.switchThumb}>
+          <LightModeIcon fill={theme.vars.palette.sky.light} />
+        </div>
       }
       checkedIcon={
-        <ThemeSwitchThumb bgcolor={theme.vars.palette.sky.default}>
-          <DarkModeIcon
-            fontSize="small"
-            htmlColor={theme.vars.palette.sky.light}
-          />
-        </ThemeSwitchThumb>
+        <div className={styles.switchThumb}>
+          <DarkModeIcon fill={theme.vars.palette.sky.light} />
+        </div>
       }
     />
   );

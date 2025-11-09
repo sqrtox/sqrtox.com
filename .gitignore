@@ -1,24 +1,18 @@
 # Local History
 .history
 
-# Node.js
-node_modules
-
-# Turborepo
-.turbo
-
 # Next.js
 .next
-/out
+next-env.d.ts
 
-# Program Data
+# Output
+out
+
+# Dependencies
+node_modules
+
+# Auto-generated assets
+public/.assets
+
+# Application data
 .data
-
-# Lighthouse
-*.report.html
-
-# Measurement
-.measurement
-
-# TypeScript
-*.tsbuildinfo

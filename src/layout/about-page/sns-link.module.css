@@ -1,0 +1,9 @@
+.listItem {
+  display: flex;
+  flex-direction: column;
+  gap: calc(1 * var(--mui-spacing));
+}
+
+.text {
+  margin-left: calc(1 * var(--mui-spacing));
+}
