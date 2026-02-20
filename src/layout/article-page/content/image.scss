@@ -3,7 +3,7 @@
   :global(.articleImageContainer) {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 1rem;
   }
 
@@ -16,6 +16,6 @@
     align-items: center;
     justify-content: center;
     background-image: linear-gradient(to right bottom, rgba(var(--mui-palette-background-defaultChannel) / 0.9), rgba(var(--mui-palette-text-primaryChannel) / 0.1));
-    box-shadow: var(--mui-shadows-5);
+    box-shadow: var(--mui-shadows-4);
   }
 }
