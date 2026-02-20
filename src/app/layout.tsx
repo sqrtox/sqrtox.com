@@ -4,6 +4,8 @@ import styles from "#src/app/layout.module.css";
 import CommonLayout from "#src/layout/common/common-layout";
 import ThemeProvider from "#src/theme/theme-provider";
 
+import "kiso.css";
+
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL),
   title: {
