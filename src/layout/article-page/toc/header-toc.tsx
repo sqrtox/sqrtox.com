@@ -62,6 +62,7 @@ export default function HeaderToc({ toc }: HeaderTocProps) {
     <>
       {createPortal(
         <IconButton
+          aria-label="open table of contents"
           ref={(el) => {
             if (el) {
               setTocButtonEl(el);
