@@ -8,7 +8,7 @@ import UpdateIcon from "material-symbols/update.svg";
 import type { Article } from "#src/article/article";
 import ArticleTime from "#src/article/article-time";
 import { routes } from "#src/util/route";
-import styles from "./article-page.module.css";
+import styles from "./article-page.module.scss";
 import Content from "./content/content";
 import HistoryLink from "./history-link";
 import TagLink from "./tag-link";
@@ -27,7 +27,7 @@ export default async function ArticlePage({ article }: ArticlePageProps) {
     <Container>
       <Stack paddingY={5} spacing={4}>
         <Stack>
-          <Typography component="h1" variant="h4">
+          <Typography component="h1" variant="h4" className={styles.title}>
             {article.title}
           </Typography>
         </Stack>

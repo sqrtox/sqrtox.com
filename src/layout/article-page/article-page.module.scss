@@ -10,6 +10,10 @@
     flex-direction: column-reverse;
     justify-content: stretch;
   }
+
+  :global(.MuiTypography-root).title {
+    font-size: 2rem;
+  }
 }
 
 .contentPaper {
