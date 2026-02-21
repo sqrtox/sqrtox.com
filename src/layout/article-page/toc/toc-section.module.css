@@ -10,6 +10,15 @@
   color: var(--mui-palette-text-primary);
 }
 
+.navContainer {
+  max-height: 70svh;
+}
+
+.nav {
+  padding-right: calc(1 * var(--mui-spacing));
+  overflow: auto;
+}
+
 @media (max-width: 1200px) {
   .toc.popperToc {
     max-width: 85svw;

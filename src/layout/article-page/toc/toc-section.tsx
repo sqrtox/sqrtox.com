@@ -68,11 +68,11 @@ export default function TocSection({ ref, toc, popper }: TocSectionProps) {
       className={clsx(styles.toc, popper && styles.popperToc)}
       elevation={popper ? 5 : 1}
     >
-      <Stack padding={2} spacing={2}>
+      <Stack padding={2} spacing={2} className={styles.navContainer}>
         <Typography component="h2" variant="h6">
           目次
         </Typography>
-        <nav>
+        <nav className={styles.nav}>
           <TocList toc={toc} />
         </nav>
       </Stack>
