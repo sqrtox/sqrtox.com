@@ -2,6 +2,7 @@
   a {
     word-break: break-all;
     color: var(--mui-palette-primary-main);
+    text-decoration: underline;
     text-decoration-color: rgba(var(--mui-palette-primary-mainChannel) / 0.4);
 
     &:hover {
