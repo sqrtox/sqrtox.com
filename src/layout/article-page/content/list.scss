@@ -13,4 +13,14 @@
       }
     }
   }
+
+  :global(.footnotes) ol {
+    margin-left: 1em;
+    list-style-type: decimal;
+
+    ::marker {
+      color: var(--mui-palette-text-secondary);
+      font-size: 0.9em;
+    }
+  }
 }
