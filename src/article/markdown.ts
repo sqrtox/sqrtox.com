@@ -1,7 +1,6 @@
 import rehypeSectionize from "@hbsnow/rehype-sectionize";
 import { transformerCopyButton } from "@rehype-pretty/transformers";
 import rehypeExtractToc, { type Toc } from "@stefanprobst/rehype-extract-toc";
-import { h } from "hastscript";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";

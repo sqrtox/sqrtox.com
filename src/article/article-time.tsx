@@ -6,7 +6,7 @@ import Icon from "#src/component/icon";
 
 export interface ArticleTimeProps {
   time: Date;
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: TODO: 定義不可
   icon: any;
 }
 

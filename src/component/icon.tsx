@@ -3,8 +3,7 @@ import type { SVGProps } from "react";
 import styles from "./icon.module.css";
 
 export interface IconOwnProps {
-  // TODO
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  // biome-ignore lint/suspicious/noExplicitAny: TODO: 定義不可
   component: any;
 }
 

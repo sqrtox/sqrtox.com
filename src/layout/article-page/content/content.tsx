@@ -1,6 +1,5 @@
 import "remark-github-alerts/styles/github-base.css";
 
-import Paper from "@mui/material/Paper";
 import type { Html } from "#src/article/markdown";
 import styles from "./content.module.scss";
 import { InternalLinkRouter } from "./internal-link-router";
@@ -15,7 +14,7 @@ export default function Content({ html }: ContentProps) {
       <InternalLinkRouter />
       <div
         className={styles.content}
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: TODO: 一応サニタイズするべきかも
         dangerouslySetInnerHTML={{ __html: html }}
       />
     </>
