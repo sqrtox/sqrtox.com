@@ -30,6 +30,7 @@ export const rehypeAssets: Plugin<[RehypeAssetsOptions], Root, Root> =
         height: dims.height,
         src,
         class: "articleImage",
+        title: image.properties.title ?? image.properties.alt,
       });
 
       Object.assign(node, {
@@ -45,6 +46,8 @@ export const rehypeAssets: Plugin<[RehypeAssetsOptions], Root, Root> =
               href: src,
               target: "_blank",
               rel: "noopener noreferrer",
+              class: "imageLink",
+              style: `--aspect: ${dims.width} / ${dims.height};`,
             },
             children: [image],
           },
