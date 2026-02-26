@@ -7,12 +7,14 @@
 }
 
 .link {
+  --border-color: var(--mui-palette-action-hover);
   display: inline-block;
   width: 100%;
   padding: calc(0.5 * var(--mui-spacing)) calc(1 * var(--mui-spacing));
-  padding-left: calc(calc(1 + calc(var(--depth) * 2)) * var(--mui-spacing));
+  padding-left: calc(calc(1.5 + calc(var(--depth) * 2)) * var(--mui-spacing));
   text-decoration: none;
   color: var(--mui-palette-text-secondary);
+  border-left: 3px solid var(--border-color);
 }
 
 .link:hover {

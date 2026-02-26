@@ -6,6 +6,7 @@
 }
 
 .intersected {
+  --border-color: var(--mui-palette-primary-main);
   background-color: var(--mui-palette-action-hover);
   color: var(--mui-palette-text-primary);
 }
