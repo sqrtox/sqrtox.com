@@ -14,6 +14,12 @@
     }
   }
 
+  ol {
+    list-style-type: decimal;
+    margin-left: 1rem;
+    margin-bottom: 1em;
+  }
+
   :global(.footnotes) ol {
     margin-left: 1em;
     list-style-type: decimal;
